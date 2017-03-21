@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import feed.web.common.TypeEnum.FollowEnum;
+import feed.web.common.auth.LocalObtainer;
 import feed.web.dao.UserInfoDao;
 import feed.web.dao.UserRelationDao;
 import feed.web.model.po.UserRelationPo;
@@ -18,9 +19,12 @@ public class UserRelationServiceImpl implements UserRelationService {
 	private UserRelationDao userRelationDao;
 	@Autowired
 	private UserInfoDao userInfoDao;
+	//本地存储
+	private LocalObtainer obtainer = LocalObtainer.getInstance();
 	
 	@Override
-	public void follow(int userId, int followId) {
+	public void follow(int followId) {
+		int userId = obtainer.getSession().getUserId();
 		// 创建A关注B的关系
 		UserRelationPo userRelation = new UserRelationPo();
 		userRelation.setUserId(userId);
@@ -41,7 +45,8 @@ public class UserRelationServiceImpl implements UserRelationService {
 	}
 
 	@Override
-	public void unFollow(int userId, int followId) {
+	public void unFollow(int followId) {
+		int userId = obtainer.getSession().getUserId();
 		// 删除A关注B的关系
 		UserRelationPo userRelation = new UserRelationPo();
 		userRelation.setUserId(userId);

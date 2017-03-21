@@ -41,11 +41,11 @@ public class UserInfoController extends BaseController {
 		return new ResponseEntity<Void>(null, SUCCESS);
 	}
 
-	@RequestMapping(value = "/login/{userId}/{userPwd}", method = RequestMethod.POST)
+	@RequestMapping(value = "/login/{userEmail}/{userPwd}", method = RequestMethod.POST)
 	public ResponseEntity<String> login(
-			@PathVariable(value = "userId") int userId,
+			@PathVariable(value = "userEmail") String userEmail,
 			@PathVariable(value = "userPwd") String userPwd) {
-		String token = userService.login(userId, userPwd);
+		String token = userService.login(userEmail, userPwd);
 		return new ResponseEntity<String>(token, SUCCESS);
 	}
 }

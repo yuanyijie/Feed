@@ -16,8 +16,9 @@ public class UserServiceTest extends SpringTestBase {
 	@Rollback(true)
 	public void addUser(){
 		UserInfoVo user = new UserInfoVo();
-		user.setUserName("yi");
-		user.setUserId(2);
+		user.setUserName("JackYuan");
+		user.setUserEmail("510128593@qq.com");
+		user.setUserPwd("123");
 		userInfoService.add(user);
 	}
 }

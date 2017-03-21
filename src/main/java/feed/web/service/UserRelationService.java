@@ -12,7 +12,7 @@ public interface UserRelationService {
 	 * @param userId
 	 * @param followId
 	 */
-	void follow(int userId, int followId);
+	void follow(int followId);
 	
 	
 	/**
@@ -20,5 +20,5 @@ public interface UserRelationService {
 	 * @param userId
 	 * @param followId
 	 */
-	void unFollow(int userId, int followId);
+	void unFollow(int followId);
 }

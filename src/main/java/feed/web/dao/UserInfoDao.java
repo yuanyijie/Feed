@@ -65,4 +65,19 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	int getMsgCount(@Param(value="userId") int userId);
+	
+	/**
+	 * 检查用户名密码是否有对应的条目
+	 * @param userEmail
+	 * @param userPwd
+	 * @return null或者查询到的userId
+	 */
+	Integer checkAccount(@Param(value="userEmail") String userEmail, @Param(value="userPwd") String userPwd);
+	
+	/**
+	 * 统计当前用户表中指定email的个数
+	 * @param userEmail
+	 * @return
+	 */
+	int emailCount(@Param(value="userEmail") String userEmail);
 }

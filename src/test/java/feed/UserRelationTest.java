@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
+import feed.web.model.UserInfoSession;
 import feed.web.service.UserRelationService;
 
 /**
@@ -19,11 +20,15 @@ public class UserRelationTest extends SpringTestBase {
 	@Test
 	@Rollback(false)
 	public void addFollow(){
-		
 		long startTime =  System.currentTimeMillis();
-		service.follow(2, 1);
-		service.unFollow(2, 1);
+		UserInfoSession session = new UserInfoSession();
+		session.setUserId(2);
+		obtainer.putSession(session);
+		
+		service.follow(1);
+		service.unFollow(1);
 		long endTime = System.currentTimeMillis();
 		System.out.println((endTime-startTime)+"ms");
+		obtainer.clearSession();
 	}
 }

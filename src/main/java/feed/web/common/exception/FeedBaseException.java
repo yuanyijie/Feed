@@ -22,8 +22,9 @@ public class FeedBaseException extends RuntimeException {
 	public int getCode() {
 		return errorCode;
 	}
-	
-	public String getMsg(){
+
+	@Override
+	public String getMessage() {
 		return errorMsg;
 	}
 
@@ -34,6 +35,5 @@ public class FeedBaseException extends RuntimeException {
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
 	}
-	
 
 }

@@ -25,6 +25,11 @@ public class UserInfoPo {
 	private String userPwd;
 	
 	/**
+	 * 用户邮箱
+	 */
+	private String userEmail;
+	
+	/**
 	 * 消息总数
 	 */
 	private Integer msgCount;
@@ -89,7 +94,14 @@ public class UserInfoPo {
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
+	
+	public String getUserEmail() {
+		return userEmail;
+	}
 
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
 	public UserInfoVo toVo(){
 		UserInfoVo vo = new UserInfoVo();
@@ -99,6 +111,7 @@ public class UserInfoPo {
 		vo.setMsgCount(msgCount);
 		vo.setFansCount(fansCount);
 		vo.setFollowCount(followCount);
+		vo.setUserEmail(userEmail);
 		return vo;
 	}
 	

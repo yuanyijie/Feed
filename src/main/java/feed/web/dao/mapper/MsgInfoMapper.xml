@@ -9,20 +9,12 @@
 			msg_id,
 			content,
 			type,
-			commented_count,
-			comment_count,
-			transferred_count,
-			transfer_count,
 			time_t
 		) values(
 			#{userId},
 			＃{msgId},
 			#{content},
 			#{type},
-			#{commentedCount},
-			#{commentCount},
-			#{transferredCount},
-			#{transferCount},
 			unix_timestamp(now())
 		)
 	</insert>

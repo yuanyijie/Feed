@@ -4,6 +4,7 @@
 	<resultMap id="userInfoMap" type="feed.web.model.po.UserInfoPo">
 		<id property="userId" column="user_id" javaType="int"></id>
 		<result property="userName" column="user_name" javaType="string"></result>
+		<result property="userEmail" column="user_email" javaType="string"></result>
 		<result property="msgCount" column="msg_count" javaType="int"></result>
 		<result property="fansCount" column="fans_count" javaType="int"></result>
 		<result property="followCount" column="follow_count" javaType="int"></result>
@@ -13,8 +14,8 @@
 	<!-- 添加用户信息 -->
 	<insert id="add">
 		insert into
-		t_user_info(user_id,user_name)
-		values(#{userId},#{userName})
+		t_user_info(user_name,user_pwd,user_email)
+		values(#{userName},#{userPwd},#{userEmail})
 	</insert>
 
 	<!-- 根据用户名获取用户信息 -->
@@ -87,5 +88,23 @@
 		where user_id = #{userId}	
 	</select>
 	
+	<!-- 检验当前的用户名密码 -->
+	<select id="checkAccount" resultType="int">
+		select
+		user_id
+		from
+		t_user_info
+		where user_email = #{userEmail}
+		and user_pwd = #{userPwd}
+	</select>
+	
+	<!-- 统计当前用户表中指定email的个数 -->
+	<select id="emailCount" resultType="int">
+		select
+		count(1)
+		from
+		t_user_info
+		where user_email = #{userEmail}
+	</select>
 
 </mapper>

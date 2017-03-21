@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 
 import feed.web.common.auth.LocalObtainer;
+import feed.web.common.util.FeedAssert;
+import feed.web.common.util.MD5Util;
 import feed.web.dao.UserInfoDao;
 import feed.web.model.UserInfoSession;
 import feed.web.model.po.UserInfoPo;
@@ -25,6 +27,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public void add(UserInfoVo userInfo) {
+		String userPwd = userInfo.getUserPwd();
+		String userEmail = userInfo.getUserEmail();
+		FeedAssert.notNullOrEmpty(userInfo.getUserName(), userPwd, userEmail);
+		FeedAssert.numberIsZero(userInfoDao.emailCount(userEmail), "该邮箱已经被使用");
+		// 将密码MD5化
+		userInfo.setUserPwd(MD5Util.generate(userPwd));
 		UserInfoPo userPo = userInfo.toPo();
 		userInfoDao.add(userPo);
 	}
@@ -42,13 +50,17 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public String login(int userId, String password) {
-		// 暂时不做任何业务逻辑判断 直接将userId生成
+	public String login(String email, String password) {
+		FeedAssert.notNullOrEmpty(email, password);
+		// 将密码MD5化
+		password = MD5Util.generate(password);
+		Integer userId = userInfoDao.checkAccount(email, password);
+		FeedAssert.notNull(userId, "用户名或者密码不正确");
+
 		String loginToken = null;
 		UserInfoSession session = new UserInfoSession();
 		session.setUserId(userId);
-		session.setTimeStamp(System.nanoTime());
-		
+		session.setTimeStamp(System.currentTimeMillis());
 		// 生成loginToken
 		loginToken = Jwts.builder().setSubject(JSON.toJSONString(session))
 				.signWith(SignatureAlgorithm.HS256, obtainer.getKey())

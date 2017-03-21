@@ -1,5 +1,7 @@
 package feed.web.model.vo;
 
+import feed.web.model.po.MsgInfoPo;
+
 /**
  * 元消息数据Po
  * @author Boxbox
@@ -122,6 +124,20 @@ public class MsgInfoVo {
 
 	public void setTimeStamp(Integer timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+	
+	public MsgInfoPo toPo(){
+		MsgInfoPo po =new MsgInfoPo();
+		po.setUserId(userId);
+		po.setMsgId(msgId);
+		po.setContent(content);
+		po.setType(type);
+		po.setCommentedCount(commentedCount);
+		po.setCommentCount(commentCount);
+		po.setTransferredCount(transferredCount);
+		po.setTransferCount(transferCount);
+		po.setTimeStamp(timeStamp);
+		return po;
 	}
 	
 }
