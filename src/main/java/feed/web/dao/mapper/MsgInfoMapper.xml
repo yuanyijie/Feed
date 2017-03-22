@@ -12,10 +12,11 @@
 			time_t
 		) values(
 			#{userId},
-			＃{msgId},
+			#{msgId},
 			#{content},
 			#{type},
-			unix_timestamp(now())
+			#{timeStamp}
+			<!--unix_timestamp(now())-->
 		)
 	</insert>
 </mapper>

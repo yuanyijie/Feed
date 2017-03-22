@@ -1,39 +1,62 @@
 package feed.web.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import feed.web.common.auth.LocalObtainer;
+import feed.web.common.TypeEnum.FeedEnum;
 import feed.web.dao.MsgInfoDao;
 import feed.web.dao.UserInfoDao;
-import feed.web.model.vo.MsgInfoVo;
+import feed.web.dao.UserRelationDao;
+import feed.web.model.po.MsgInfoPo;
 import feed.web.service.MsgInfoService;
+import feed.web.service.task.PushFeedTask;
 
 @Service
-public class MsgInfoServiceImpl implements MsgInfoService {
+public class MsgInfoServiceImpl extends BaseService implements MsgInfoService {
 
 	@Autowired
 	private MsgInfoDao msgInfoDao;
 
 	@Autowired
 	private UserInfoDao userInfoDao;
+	
+	@Autowired
+	private UserRelationDao relationDao;
+	
+	@Autowired
+	private ThreadPoolTaskExecutor executor;
 
-	private LocalObtainer obtainer = LocalObtainer.getInstance();
 
 	@Transactional
 	@Override
-	public void postFeed(MsgInfoVo msgInfo) {
+	public void postFeed(String feedContent) {
+		MsgInfoPo msgInfo = new MsgInfoPo();
 		// 从session中取出UserId
-		int userId = obtainer.getSession().getUserId();
+		int userId = getUserId();
 		msgInfo.setUserId(userId);
+		msgInfo.setContent(feedContent);
+		// 标记为原创消息
+		msgInfo.setType(FeedEnum.ORIGIN.code());
+		// 设置unix时间戳
+		int timeStamp = (int)(System.currentTimeMillis()/1000);
+		msgInfo.setTimeStamp(timeStamp);
 		
 		// 取出msgId
 		userInfoDao.msgCountIncrement(userId);
 		int msgCount = userInfoDao.getMsgCount(userId);
 		msgInfo.setMsgId(msgCount);
+		msgInfoDao.add(msgInfo);
 		
-		msgInfoDao.add(msgInfo.toPo());
+		// 获取粉丝列表
+		List<Integer> fansList = relationDao.getFansList(userId);
+		// fasout
+		if (fansList!=null && !fansList.isEmpty())
+			executor.submitListenable(new PushFeedTask(fansList, userId, msgCount,timeStamp));
 	}
+	
 
 }

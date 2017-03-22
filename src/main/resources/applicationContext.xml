@@ -14,7 +14,7 @@
 	http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
 	<!-- JNDI数据源 -->
-	<context:property-placeholder location="classpath:mysql.properties"/>  
+	<context:property-placeholder location="classpath:mysql.properties" />
 
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
@@ -41,11 +41,11 @@
 
 	<!-- 使用注解 -->
 	<mvc:annotation-driven />
-	
+
 	<!-- 配置拦截器 -->
-	<mvc:interceptors>  
-      <bean class="feed.web.common.auth.AuthInterceptor" />  
-    </mvc:interceptors>  
+	<mvc:interceptors>
+		<bean class="feed.web.common.auth.AuthInterceptor" />
+	</mvc:interceptors>
 
 	<!-- MyBatis的SqlSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
@@ -76,5 +76,14 @@
 		<property name="basePackage" value="feed.web.dao" />
 		<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
 		<property name="annotationClass" value="org.springframework.stereotype.Repository"></property>
+	</bean>
+
+	<!-- spring线程池，用于异步任务 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="keepAliveSeconds" value="300" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="50" />
 	</bean>
 </beans>

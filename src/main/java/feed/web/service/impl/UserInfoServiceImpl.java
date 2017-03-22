@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
-import feed.web.common.auth.LocalObtainer;
 import feed.web.common.util.FeedAssert;
 import feed.web.common.util.MD5Util;
 import feed.web.dao.UserInfoDao;
@@ -18,12 +17,10 @@ import feed.web.model.vo.UserInfoVo;
 import feed.web.service.UserInfoService;
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends BaseService implements UserInfoService {
 
 	@Autowired
 	private UserInfoDao userInfoDao;
-
-	private LocalObtainer obtainer = LocalObtainer.getInstance();
 
 	@Override
 	public void add(UserInfoVo userInfo) {
@@ -44,9 +41,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public void update(int userId, UserInfoVo userInfo) {
+	public void update(UserInfoVo userInfo) {
 		UserInfoPo userPo = userInfo.toPo();
-		userInfoDao.update(userId, userPo);
+		userInfoDao.update(getUserId(), userPo);
 	}
 
 	@Override
@@ -63,8 +60,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		session.setTimeStamp(System.currentTimeMillis());
 		// 生成loginToken
 		loginToken = Jwts.builder().setSubject(JSON.toJSONString(session))
-				.signWith(SignatureAlgorithm.HS256, obtainer.getKey())
-				.compact();
+				.signWith(SignatureAlgorithm.HS256, getKey()).compact();
 		return loginToken;
 	}
 

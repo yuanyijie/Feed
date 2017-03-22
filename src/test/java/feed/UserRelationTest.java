@@ -20,15 +20,19 @@ public class UserRelationTest extends SpringTestBase {
 	@Test
 	@Rollback(false)
 	public void addFollow(){
-		long startTime =  System.currentTimeMillis();
-		UserInfoSession session = new UserInfoSession();
-		session.setUserId(2);
-		obtainer.putSession(session);
-		
-		service.follow(1);
-		service.unFollow(1);
-		long endTime = System.currentTimeMillis();
-		System.out.println((endTime-startTime)+"ms");
-		obtainer.clearSession();
+//		long startTime =  System.currentTimeMillis();
+//		UserInfoSession session = new UserInfoSession();
+//		session.setUserId(2);
+//		obtainer.putSession(session);
+//		
+//		service.follow(1);
+//		service.unFollow(1);
+//		long endTime = System.currentTimeMillis();
+//		System.out.println((endTime-startTime)+"ms");
+//		obtainer.clearSession();
+		for(int i=2;i<1000;i++){
+			changeUserId(i);
+			service.follow(1);
+		}
 	}
 }

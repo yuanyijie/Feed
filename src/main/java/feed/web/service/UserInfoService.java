@@ -30,7 +30,7 @@ public interface UserInfoService {
 	 * @param userId
 	 * @param userInfo
 	 */
-	void update(int userId, UserInfoVo userInfo);
+	void update(UserInfoVo userInfo);
 	
 	/**
 	 * 用户登录

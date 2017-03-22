@@ -19,7 +19,7 @@
 		type = #{type}
 	</delete>
 	
-	<select id="getFansList" parameterType="int">
+	<select id="getFansList" parameterType="int" resultType="int">
 		select
 		follow_id
 		from t_user_relation
@@ -27,7 +27,7 @@
 		and type = 0 
 	</select>
 	
-	<select id="getFollowList" parameterType="int">
+	<select id="getFollowList" parameterType="int" resultType="int">
 		select
 		follow_id
 		from t_user_relation

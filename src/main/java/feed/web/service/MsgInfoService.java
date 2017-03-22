@@ -1,6 +1,5 @@
 package feed.web.service;
 
-import feed.web.model.vo.MsgInfoVo;
 
 /**
  * 
@@ -10,8 +9,8 @@ import feed.web.model.vo.MsgInfoVo;
 public interface MsgInfoService {
 
 	/**
-	 * post
-	 * @param msgInfo
+	 * post新的feed
+	 * @param feedContent
 	 */
-	void postFeed(MsgInfoVo msgInfo);
+	void postFeed(String feedContent);
 }

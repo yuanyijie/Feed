@@ -17,5 +17,6 @@
         <!--自动扫描包内的Mapper接口与配置文件 -->
         <mapper resource="feed\web\dao\mapper\UserInfoMapper.xml"></mapper>
         <mapper resource="feed\web\dao\mapper\UserRelationMapper.xml"></mapper>
+        <mapper resource="feed\web\dao\mapper\MsgInfoMapper.xml"></mapper>
     </mappers>
 </configuration>

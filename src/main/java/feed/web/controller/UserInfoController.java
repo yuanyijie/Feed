@@ -33,11 +33,9 @@ public class UserInfoController extends BaseController {
 		return new ResponseEntity<UserInfoVo>(user, SUCCESS);
 	}
 
-	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(
-			@PathVariable(value = "userId") int userId,
-			@RequestBody UserInfoVo userInfo) {
-		userService.update(userId, userInfo);
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UserInfoVo userInfo) {
+		userService.update(userInfo);
 		return new ResponseEntity<Void>(null, SUCCESS);
 	}
 

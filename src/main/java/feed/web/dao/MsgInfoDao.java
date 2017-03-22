@@ -13,4 +13,5 @@ public interface MsgInfoDao {
 	 * @param po
 	 */
 	void add(MsgInfoPo po);
+
 }

@@ -24,4 +24,21 @@ public class TypeEnum {
 			return code;
 		}
 	}
+	
+	public enum FeedEnum{
+		/**
+		 * Feed的三种类型  原创 评论 转发
+		 */
+		ORIGIN(0),COMMENT(1),TRANS(2);
+		
+		private int code;
+		
+		private FeedEnum(int code){
+			this.code = code;
+		}
+		
+		public int code(){
+			return code;
+		}
+	}
 }

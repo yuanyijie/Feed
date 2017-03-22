@@ -49,8 +49,34 @@ public class FeedAssert {
 		}
 	}
 	
+	/**
+	 * 断言某个数字就是0  否则抛出Service Runtime异常
+	 * @param resultNumber
+	 * @param message
+	 */
 	public static void numberIsZero(int resultNumber, String message){
 		numberLikeExcepted(resultNumber, 0, message);
+	}
+	
+	/**
+	 * 断言某个数字不是预先期望的数字 否则抛出Service Runtime异常
+	 * @param resultNumber
+	 * @param preNumber
+	 * @param message
+	 */
+	public static void numberUnlikeExcepted(int resultNumber, int preNumber, String message){
+		if(resultNumber==preNumber){
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), message);
+		}
+	}
+	
+	/**
+	 * 断言某个数字不是0  否则抛出Service Runtime异常
+	 * @param resultNumber
+	 * @param message
+	 */
+	public static void numberIsNotZero(int resultNumber, String message){
+		numberUnlikeExcepted(resultNumber, 0, message);
 	}
 	
 }

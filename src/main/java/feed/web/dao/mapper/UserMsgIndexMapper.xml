@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="feed.web.dao.UserMsgIndexDao">
+	<insert id="add" parameterType="feed.web.model.po.UserMsgIndexPo">
+		insert into
+		t_user_msg_index(
+		user_id,
+		author_id,
+		msg_id,
+		time_t
+		) values(
+		#{userId},
+		#{authId},
+		#{msgId},
+		#{timeStamp}
+		)
+	</insert>
+</mapper>

@@ -75,7 +75,7 @@
 		update
 		t_user_info
 		set
-		msg_count = msgcount + 1
+		msg_count = msg_count + 1
 		where user_id = #{userId}
 	</update>
 	
