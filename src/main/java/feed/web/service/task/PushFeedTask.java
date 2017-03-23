@@ -1,9 +1,13 @@
 package feed.web.service.task;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import feed.web.dao.UserMsgIndexDao;
 import feed.web.model.po.UserMsgIndexPo;
@@ -14,39 +18,31 @@ import feed.web.model.po.UserMsgIndexPo;
  * @author Boxbox
  * 
  */
-public class PushFeedTask implements Callable<Integer> {
-	// 粉丝列表
-	private List<Integer> fansList;
-	// 作者用户Id
-	private int userId;
-	// 消息Id
-	private int msgId;
-	// Feed产生时间戳
-	private int timeStamp;
+@Component
+public class PushFeedTask {
+	private final static Logger log = Logger.getLogger(PushFeedTask.class);
 
 	@Autowired
 	private UserMsgIndexDao userMsgIndexDao;
 
-	public PushFeedTask(List<Integer> fansList, int userId, int msgId, int timeStamp) {
-		this.fansList = fansList;
-		this.userId = userId;
-		this.msgId = msgId;
-		this.timeStamp = timeStamp;
-	}
-
-	@Override
-	public Integer call() throws Exception {
-		int count = 0;
-		for (int followId : fansList) {
-			UserMsgIndexPo msgIndex = new UserMsgIndexPo();
-			msgIndex.setAuthId(userId);
-			msgIndex.setUserId(followId);
-			msgIndex.setTimeStamp(timeStamp);
-			msgIndex.setMsgId(msgId);
-			userMsgIndexDao.add(msgIndex);
-			count++;
+	@Async
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	// 大批量插入的时候不使用事务
+	public void call(List<Integer> fansList, int userId, int msgId,
+			int timeStamp) {
+		UserMsgIndexPo msgIndex = new UserMsgIndexPo();
+		fansList.add(0, userId);
+		long start = System.currentTimeMillis();
+		msgIndex.setAuthId(userId);
+		msgIndex.setTimeStamp(timeStamp);
+		msgIndex.setMsgId(msgId);
+		try {
+			userMsgIndexDao.addAll(msgIndex, fansList);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
-		return count;
+		long end = System.currentTimeMillis();
+		System.out.println((end - start) + "ms");
 	}
 
 }

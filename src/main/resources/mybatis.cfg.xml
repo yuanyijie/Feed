@@ -18,5 +18,6 @@
         <mapper resource="feed\web\dao\mapper\UserInfoMapper.xml"></mapper>
         <mapper resource="feed\web\dao\mapper\UserRelationMapper.xml"></mapper>
         <mapper resource="feed\web\dao\mapper\MsgInfoMapper.xml"></mapper>
+        <mapper resource="feed\web\dao\mapper\UserMsgIndexMapper.xml"></mapper>
     </mappers>
 </configuration>

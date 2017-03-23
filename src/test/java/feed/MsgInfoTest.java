@@ -14,11 +14,6 @@ public class MsgInfoTest extends SpringTestBase {
 	@Rollback(false)
 	@Test
 	public void postTest(){
-		msgInfoService.postFeed("hello ||world");
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		msgInfoService.postFeed("test");
 	}
 }

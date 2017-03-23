@@ -1,16 +1,22 @@
 package feed.web.common;
 
+/**
+ * 请求回应体 包含一个data和一个请求回应
+ * @author Boxbox
+ *
+ * @param <T>
+ */
 public class ResponseEntity<T> {
 	
     private T data;
 	
-	private ResponseCode code;
+	private ResponseCode response;
 	
 	public ResponseEntity(){}
 	
-	public ResponseEntity(T data, ResponseCode code){
+	public ResponseEntity(T data, ResponseCode response){
 		this.data = data;
-		this.code = code;
+		this.response = response;
 	}
 
 	public T getData() {
@@ -21,12 +27,13 @@ public class ResponseEntity<T> {
 		this.data = data;
 	}
 
-	public ResponseCode getCode() {
-		return code;
+	public ResponseCode getResponse() {
+		return response;
 	}
 
-	public void setCode(ResponseCode code) {
-		this.code = code;
+	public void setResponse(ResponseCode response) {
+		this.response = response;
 	}
-
+	
+	
 }

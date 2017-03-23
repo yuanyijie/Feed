@@ -79,11 +79,14 @@
 	</bean>
 
 	<!-- spring线程池，用于异步任务 -->
-	<bean id="taskExecutor"
+	<!-- <bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
 		<property name="keepAliveSeconds" value="300" />
 		<property name="maxPoolSize" value="10" />
 		<property name="queueCapacity" value="50" />
-	</bean>
+	</bean> -->
+	
+	<task:executor id="myexecutor" pool-size="20"/>  
+    <task:annotation-driven executor="myexecutor"/>  
 </beans>

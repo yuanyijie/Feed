@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
-import feed.web.model.UserInfoSession;
 import feed.web.service.UserRelationService;
 
 /**
@@ -30,7 +29,7 @@ public class UserRelationTest extends SpringTestBase {
 //		long endTime = System.currentTimeMillis();
 //		System.out.println((endTime-startTime)+"ms");
 //		obtainer.clearSession();
-		for(int i=2;i<1000;i++){
+		for(int i=1000;i<10000;i++){
 			changeUserId(i);
 			service.follow(1);
 		}

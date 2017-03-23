@@ -15,4 +15,17 @@
 		#{timeStamp}
 		)
 	</insert>
+
+	<insert id="addAll">
+		insert into
+		t_user_msg_index(
+		user_id,
+		author_id,
+		msg_id,
+		time_t
+		)values
+		<foreach collection="fansList" item="item" index="index" separator="," >
+			(#{item},#{msgtemp.authId},#{msgtemp.msgId},#{msgtemp.timeStamp})
+		</foreach>
+	</insert>
 </mapper>
