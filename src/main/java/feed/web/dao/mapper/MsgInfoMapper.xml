@@ -5,18 +5,34 @@
 	<insert id="add" parameterType="feed.web.model.po.MsgInfoPo">
 		insert into
 		t_msg_info(
-			user_id,
-			msg_id,
-			content,
-			type,
-			time_t
+		user_id,
+		msg_id,
+		content,
+		type,
+		time_t
 		) values(
-			#{userId},
-			#{msgId},
-			#{content},
-			#{type},
-			#{timeStamp}
-			<!--unix_timestamp(now())-->
+		#{userId},
+		#{msgId},
+		#{content},
+		#{type},
+		#{timeStamp}
+		<!--unix_timestamp(now()) -->
 		)
 	</insert>
+
+	<select id="getMsgList" resultType="feed.web.model.data.MsgInfoData">
+		SELECT
+		a.user_id,
+		a.msg_id,
+		a.content,
+		a.type,
+		a.time_t
+		FROM
+		t_msg_info a
+		JOIN t_user_msg_index b ON
+		a.user_id = b.author_id
+		WHERE
+		b.user_id = #{userId}
+		LIMIT ${(index-1)*chunk},#{chunk}
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package feed.web.common.util;
 
+import feed.web.common.Page;
 import feed.web.common.ResponseEnum;
 import feed.web.common.exception.FeedServiceException;
 
@@ -77,6 +78,15 @@ public class FeedAssert {
 	 */
 	public static void numberIsNotZero(int resultNumber, String message){
 		numberUnlikeExcepted(resultNumber, 0, message);
+	}
+	
+	/**
+	 * 断言某个分页对象是正确的 否则会抛出Service Runtime异常
+	 */
+	public static void pageIsCorrect(Page page){
+		if(page==null||page.getIndex()<0||page.getChunk()<=0){
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), "pagination error");
+		}
 	}
 	
 }

@@ -1,7 +1,5 @@
 package feed.web.service.impl;
 
-import java.util.List;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -15,7 +13,6 @@ import feed.web.common.util.MD5Util;
 import feed.web.dao.UserInfoDao;
 import feed.web.model.UserInfoSession;
 import feed.web.model.po.UserInfoPo;
-import feed.web.model.vo.MsgInfoVo;
 import feed.web.model.vo.UserInfoVo;
 import feed.web.service.UserInfoService;
 
@@ -65,15 +62,6 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
 		loginToken = Jwts.builder().setSubject(JSON.toJSONString(session))
 				.signWith(SignatureAlgorithm.HS256, getKey()).compact();
 		return loginToken;
-	}
-
-	@Override
-	public List<MsgInfoVo> getHomeFeeds() {
-		return null;
-		/**
-		 * SELECT a.* FROM t_msg_info a JOIN t_user_msg_index b ON a.user_id =
-		 * b.author_id WHERE b.user_id = '2' LIMIT 0,10
-		 */
 	}
 
 }

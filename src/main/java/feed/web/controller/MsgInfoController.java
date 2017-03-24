@@ -1,5 +1,7 @@
 package feed.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import feed.web.common.ResponseEntity;
 import feed.web.common.ResponseEnum;
+import feed.web.model.vo.MsgInfoVo;
 import feed.web.service.MsgInfoService;
 
 @RestController
@@ -18,9 +21,16 @@ public class MsgInfoController extends BaseController {
 	private MsgInfoService msgInfoService; 
 	
 	// 发表新的feed
-	@RequestMapping(value = "/postfeed", method = RequestMethod.POST)
+	@RequestMapping(value = "/feed", method = RequestMethod.POST)
 	public ResponseEntity<Void> postFeed(@RequestBody String feedContent) {
 		msgInfoService.postFeed(feedContent);
 		return ResponseEnum.VOID_SUCCESS;
 	}
+	
+	// 分页获取home的信息
+	@RequestMapping(value = "/home", method =RequestMethod.GET)
+	public ResponseEntity<List<MsgInfoVo>> getHome(){
+		return null;
+	}
+	
 }

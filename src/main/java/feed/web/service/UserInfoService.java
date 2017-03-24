@@ -1,10 +1,7 @@
 package feed.web.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import feed.web.model.vo.MsgInfoVo;
 import feed.web.model.vo.UserInfoVo;
 
 /**
@@ -42,10 +39,4 @@ public interface UserInfoService {
 	 * @return 登录成功返回一个JWT字符串，否则返回一个null
 	 */
 	String login(String email, String password);
-	
-	/**
-	 * 获取当前用户的home feed
-	 * @return
-	 */
-	List<MsgInfoVo> getHomeFeeds();  
 }
