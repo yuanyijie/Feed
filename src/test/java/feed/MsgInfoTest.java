@@ -2,9 +2,7 @@ package feed;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
-import feed.web.common.Page;
 import feed.web.service.MsgInfoService;
 
 public class MsgInfoTest extends SpringTestBase {
@@ -20,10 +18,6 @@ public class MsgInfoTest extends SpringTestBase {
 //	
 	@Test
 	public void homeTest(){
-		changeUserId(2);
-		Page page = new Page();
-		page.setIndex(1);
-		page.setChunk(10);
-		System.out.println(msgInfoService.getHome(page));
+		System.out.println(msgInfoService.getHome(1,10));
 	}
 }

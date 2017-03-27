@@ -11,6 +11,7 @@
 		<jackson.version>1.9.13</jackson.version>
 		<fastjson.version>1.2.2</fastjson.version>
 		<tomcat.version>7.0.41</tomcat.version>
+		<redis.version>2.6.0</redis.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -109,6 +110,11 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
+		</dependency>
+		<dependency> 
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${redis.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

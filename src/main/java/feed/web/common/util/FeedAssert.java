@@ -1,6 +1,5 @@
 package feed.web.common.util;
 
-import feed.web.common.Page;
 import feed.web.common.ResponseEnum;
 import feed.web.common.exception.FeedServiceException;
 
@@ -34,59 +33,69 @@ public class FeedAssert {
 	 */
 	public static void notNull(Object obj, String message) {
 		if (obj == null) {
-			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), message);
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(),
+					message);
 		}
 	}
-	
+
 	/**
 	 * 断言某个数字就是预先期望的数字 否则抛出Service Runtime异常
+	 * 
 	 * @param resultNumber
 	 * @param preNumber
 	 * @param message
 	 */
-	public static void numberLikeExcepted(int resultNumber, int preNumber, String message){
-		if(resultNumber!=preNumber){
-			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), message);
+	public static void numberLikeExcepted(int resultNumber, int preNumber,
+			String message) {
+		if (resultNumber != preNumber) {
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(),
+					message);
 		}
 	}
-	
+
 	/**
-	 * 断言某个数字就是0  否则抛出Service Runtime异常
+	 * 断言某个数字就是0 否则抛出Service Runtime异常
+	 * 
 	 * @param resultNumber
 	 * @param message
 	 */
-	public static void numberIsZero(int resultNumber, String message){
+	public static void numberIsZero(int resultNumber, String message) {
 		numberLikeExcepted(resultNumber, 0, message);
 	}
-	
+
 	/**
 	 * 断言某个数字不是预先期望的数字 否则抛出Service Runtime异常
+	 * 
 	 * @param resultNumber
 	 * @param preNumber
 	 * @param message
 	 */
-	public static void numberUnlikeExcepted(int resultNumber, int preNumber, String message){
-		if(resultNumber==preNumber){
-			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), message);
+	public static void numberUnlikeExcepted(int resultNumber, int preNumber,
+			String message) {
+		if (resultNumber == preNumber) {
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(),
+					message);
 		}
 	}
-	
+
 	/**
-	 * 断言某个数字不是0  否则抛出Service Runtime异常
+	 * 断言某个数字不是0 否则抛出Service Runtime异常
+	 * 
 	 * @param resultNumber
 	 * @param message
 	 */
-	public static void numberIsNotZero(int resultNumber, String message){
+	public static void numberIsNotZero(int resultNumber, String message) {
 		numberUnlikeExcepted(resultNumber, 0, message);
 	}
-	
+
 	/**
 	 * 断言某个分页对象是正确的 否则会抛出Service Runtime异常
 	 */
-	public static void pageIsCorrect(Page page){
-		if(page==null||page.getIndex()<0||page.getChunk()<=0){
-			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(), "pagination error");
+	public static void pageIsCorrect(int index, int chunk) {
+		if (index < 0 || chunk <= 0) {
+			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(),
+					"pagination error");
 		}
 	}
-	
+
 }

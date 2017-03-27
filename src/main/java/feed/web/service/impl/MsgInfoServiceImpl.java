@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import feed.web.common.Page;
 import feed.web.common.TypeEnum.FeedEnum;
 import feed.web.common.util.FeedAssert;
 import feed.web.dao.MsgInfoDao;
@@ -60,8 +59,8 @@ public class MsgInfoServiceImpl extends BaseService implements MsgInfoService {
 	}
 
 	@Override
-	public List<MsgInfoData> getHome(Page page) {
-		FeedAssert.pageIsCorrect(page);
-		return msgInfoDao.getMsgList(getUserId(), page.getIndex(), page.getChunk());
+	public List<MsgInfoData> getHome(int index, int chunk) {
+		FeedAssert.pageIsCorrect(index, chunk);
+		return msgInfoDao.getMsgList(getUserId(), index, chunk);
 	}
 }
