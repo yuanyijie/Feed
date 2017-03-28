@@ -1,5 +1,7 @@
 package feed.exec.storage;
 
+import java.util.List;
+
 /**
  * 线性存储介质接口
  * @author Boxbox
@@ -7,7 +9,7 @@ package feed.exec.storage;
  * @param <N>
  * @param <T>
  */
-public interface TimeLineStorage<N, T> extends Storage<N, T> {
+public interface TimeLineStorage<N, T> {
 	
 	/**
 	 * 获取元素t在n空间的index
@@ -15,7 +17,7 @@ public interface TimeLineStorage<N, T> extends Storage<N, T> {
 	 * @param t
 	 * @return
 	 */
-	int indexOf(N n , T t);
+	long indexOf(N n , T t);
 	
 	
 	/**
@@ -30,11 +32,14 @@ public interface TimeLineStorage<N, T> extends Storage<N, T> {
 	 * @param n
 	 * @return
 	 */
-	int count(N n);
+	long count(N n);
 	
 	/**
-	 * 删除整个存储空间
+	 * 分页从redis中取数据
 	 * @param n
+	 * @param start
+	 * @param end
+	 * @return
 	 */
-	void delete(N n);
+	List<T> getSlice(N n, int start, int end);
 }

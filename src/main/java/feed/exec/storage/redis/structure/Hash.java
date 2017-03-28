@@ -1,35 +1,24 @@
 package feed.exec.storage.redis.structure;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import redis.clients.jedis.Jedis;
-import feed.exec.storage.TimeLineStorage;
+import feed.exec.storage.HashStorage;
 import feed.web.common.exception.FeedDaoException;
+import redis.clients.jedis.Jedis;
 
-public class SortedSet extends RedisStorage<List<String>> implements TimeLineStorage<String, String>{
-	
-	private final static Logger log = Logger.getLogger(SortedSet.class);
+public class Hash extends RedisStorage<Map<String, String>> implements
+		HashStorage<String, String, String> {
+	private final static Logger log = Logger.getLogger(Hash.class);
 
 	@Override
-	public void addToStorage(String key, List<String> tlist) {
+	public void addToStorage(String key, Map<String, String> data) {
 		Jedis jedis = null;
 		boolean exceptionOccured = false;
-		// 选择合适的长度
-		Map<byte[], Double> valueScoreMap = new HashMap<>(
-				(int) (tlist.size() * 1.25));
-		for (String value : tlist) {
-			valueScoreMap.put(value.getBytes(UTF_8), Double.valueOf(value));
-		}
 		try {
 			jedis = getJedis();
-			jedis.zadd(key.getBytes(UTF_8), valueScoreMap);
+			jedis.hmset(key, data);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
@@ -40,13 +29,63 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 	}
 
 	@Override
-	public List<String> getFromStorage(String key) {
+	public void removeFromStorage(String key, Map<String, String> data) {
 		Jedis jedis = null;
 		boolean exceptionOccured = false;
-		List<String> result = null;
 		try {
 			jedis = getJedis();
-			result = new ArrayList<>(jedis.zrevrange(key, 0, -1));
+			jedis.hdel(key, data.keySet().toArray(new String[0]));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			exceptionOccured = true;
+			throw FeedDaoException.JEDIS_EXCEPTION;
+		} finally {
+			releaseJedis(jedis, exceptionOccured);
+		}
+	}
+
+	@Override
+	public Map<String, String> getFromStorage(String key) {
+		Jedis jedis = null;
+		boolean exceptionOccured = false;
+		Map<String, String> result = null;
+		try {
+			jedis = getJedis();
+			result = jedis.hgetAll(key);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			exceptionOccured = true;
+			throw FeedDaoException.JEDIS_EXCEPTION;
+		} finally {
+			releaseJedis(jedis, exceptionOccured);
+		}
+		return result;
+	}
+
+	@Override
+	public void set(String key, String hash, String value) {
+		Jedis jedis = null;
+		boolean exceptionOccured = false;
+		try {
+			jedis = getJedis();
+			jedis.hset(key, hash, value);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			exceptionOccured = true;
+			throw FeedDaoException.JEDIS_EXCEPTION;
+		} finally {
+			releaseJedis(jedis, exceptionOccured);
+		}
+	}
+
+	@Override
+	public String get(String key, String hash) {
+		Jedis jedis = null;
+		boolean exceptionOccured = false;
+		String result = null;
+		try {
+			jedis = getJedis();
+			result = jedis.hget(key, hash);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
@@ -58,70 +97,13 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 	}
 
 	@Override
-	public void removeFromStorage(String key, List<String> tlist) {
+	public long incrby(String key, String hash, long value) {
 		Jedis jedis = null;
 		boolean exceptionOccured = false;
+		long result = 0;
 		try {
 			jedis = getJedis();
-			jedis.zrem(key, tlist.toArray(new String[0]));
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			exceptionOccured = true;
-			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
-			releaseJedis(jedis, exceptionOccured);
-		}
-	}
-
-	@Override
-	public long indexOf(String key, String member) {
-		Jedis jedis = null;
-		boolean exceptionOccured = false;
-		long index = 0;
-		try {
-			jedis = getJedis();
-			index = jedis.zrank(key, member);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			exceptionOccured = true;
-			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
-			releaseJedis(jedis, exceptionOccured);
-		}
-		return index;
-	}
-
-	@Override
-	public void trim(String key) {
-		// TODO 这里需要根据一定的策略，将优先级低的部分数据从队列中移除
-	}
-
-	@Override
-	public long count(String key) {
-		Jedis jedis = null;
-		boolean exceptionOccured = false;
-		long count = 0;
-		try {
-			jedis = getJedis();
-			count = jedis.zcard(key);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			exceptionOccured = true;
-			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
-			releaseJedis(jedis, exceptionOccured);
-		}
-		return count;
-	}
-
-	@Override
-	public List<String> getSlice(String key, int start, int end) {
-		Jedis jedis = null;
-		boolean exceptionOccured = false;
-		List<String> result = null;
-		try {
-			jedis = getJedis();
-			result = new ArrayList<>(jedis.zrevrange(key, start, end));
+			result = jedis.hincrBy(key, hash, value);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
@@ -131,4 +113,39 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 		}
 		return result;
 	}
+
+	@Override
+	public long decrby(String key, String hash, long value) {
+		Jedis jedis = null;
+		boolean exceptionOccured = false;
+		long result = 0;
+		try {
+			jedis = getJedis();
+			result = jedis.hincrBy(key, hash, -value);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			exceptionOccured = true;
+			throw FeedDaoException.JEDIS_EXCEPTION;
+		} finally {
+			releaseJedis(jedis, exceptionOccured);
+		}
+		return result;
+	}
+
+	@Override
+	public void delete(String key, String hash) {
+		Jedis jedis = null;
+		boolean exceptionOccured = false;
+		try {
+			jedis = getJedis();
+			jedis.hdel(key, hash);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			exceptionOccured = true;
+			throw FeedDaoException.JEDIS_EXCEPTION;
+		} finally {
+			releaseJedis(jedis, exceptionOccured);
+		}
+	}
+
 }

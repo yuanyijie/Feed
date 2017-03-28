@@ -1,7 +1,5 @@
 package feed.exec.storage;
 
-import java.util.List;
-import java.util.Set;
 
 /**
  * feed存储介质接口
@@ -22,7 +20,7 @@ public interface Storage<N, T> {
 	 * @param key
 	 * @param tlist
 	 */
-	void addToStorage(N key, List<T> tlist);
+	void addToStorage(N key, T data);
 
 	/**
 	 * 从存储空间N中获取start-end的数据 
@@ -31,12 +29,18 @@ public interface Storage<N, T> {
 	 * @param end
 	 * @return
 	 */
-	List<T> getFromStorage(N key, int start, int end);
+	T getFromStorage(N key);
 	
 	/**
 	 * 从存储空间N中移除指定集合的元素
 	 * @param key
 	 * @param tlist
 	 */
-	void removeFromStorage(N key, List<T> tlist);
+	void removeFromStorage(N key, T t);
+	
+	/**
+	 * 删除整个存储空间
+	 * @param n
+	 */
+	void delete(N n);
 }

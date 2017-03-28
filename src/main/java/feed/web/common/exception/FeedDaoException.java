@@ -7,5 +7,7 @@ public class FeedDaoException extends FeedBaseException {
 	public FeedDaoException(int errorCode, String errorMsg) {
 		super(errorCode, errorMsg);
 	}
+	
+	public final static FeedDaoException JEDIS_EXCEPTION = new FeedDaoException(-1, "NoSql Error");
 
 }
