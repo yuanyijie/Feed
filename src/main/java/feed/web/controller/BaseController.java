@@ -1,10 +1,8 @@
 package feed.web.controller;
 
-import static feed.web.common.ResponseEnum.AUTHFAILED;
 import static feed.web.common.ResponseEnum.CODE_LOGICFAILED;
 import static feed.web.common.ResponseEnum.DBFAILED;
 import static feed.web.common.ResponseEnum.UNCATCHED;
-import io.jsonwebtoken.SignatureException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +27,7 @@ public class BaseController {
 	ResponseEntity<Void> exceptionHandler(Exception e,
 			HttpServletRequest reqeust, HttpServletResponse response) {
 		ResponseEntity<Void> responseEntity = new ResponseEntity<Void>();
-		if (e instanceof SignatureException) {
-			responseEntity.setResponse(AUTHFAILED);
-		} else if (e instanceof FeedServiceException) {
+		if (e instanceof FeedServiceException) {
 			responseEntity.setResponse(new ResponseCode(CODE_LOGICFAILED, e
 					.getMessage()));
 		} else if (e instanceof DataAccessException

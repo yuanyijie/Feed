@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import feed.exec.manager.FeedManager;
 import feed.web.dao.UserMsgIndexDao;
 import feed.web.model.po.UserMsgIndexPo;
 
@@ -24,6 +25,8 @@ public class PushFeedTask {
 
 	@Autowired
 	private UserMsgIndexDao userMsgIndexDao;
+	
+	private FeedManager feedManager = FeedManager.getInstance();
 
 	@Async
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
@@ -38,6 +41,7 @@ public class PushFeedTask {
 		msgIndex.setMsgId(msgId);
 		try {
 			userMsgIndexDao.addAll(msgIndex, fansList);
+			feedManager.addActivities(fansList, userId, msgId);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

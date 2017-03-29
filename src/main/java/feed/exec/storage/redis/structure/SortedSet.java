@@ -10,11 +10,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Pipeline;
 import feed.exec.storage.TimeLineStorage;
 import feed.web.common.exception.FeedDaoException;
 
-public class SortedSet extends RedisStorage<List<String>> implements TimeLineStorage<String, String>{
-	
+public class SortedSet extends RedisStorage<List<String>> implements
+		TimeLineStorage<String, String> {
+
 	private final static Logger log = Logger.getLogger(SortedSet.class);
 
 	@Override
@@ -68,7 +70,7 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
 			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
+		} finally {
 			releaseJedis(jedis, exceptionOccured);
 		}
 	}
@@ -85,7 +87,7 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
 			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
+		} finally {
 			releaseJedis(jedis, exceptionOccured);
 		}
 		return index;
@@ -108,7 +110,7 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
 			throw FeedDaoException.JEDIS_EXCEPTION;
-		} finally{
+		} finally {
 			releaseJedis(jedis, exceptionOccured);
 		}
 		return count;
@@ -130,5 +132,16 @@ public class SortedSet extends RedisStorage<List<String>> implements TimeLineSto
 			releaseJedis(jedis, exceptionOccured);
 		}
 		return result;
+	}
+
+	@Override
+	protected void addToStorage(Pipeline pipline, String key, List<String> tlist) {
+		// 选择合适的长度
+		Map<String, Double> valueScoreMap = new HashMap<>(
+				(int) (tlist.size() * 1.25));
+		for (String value : tlist) {
+			valueScoreMap.put(value, Double.valueOf(value));
+		}
+		pipline.zadd(key, valueScoreMap);
 	}
 }

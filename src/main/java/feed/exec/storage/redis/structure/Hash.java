@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import feed.exec.storage.HashStorage;
 import feed.web.common.exception.FeedDaoException;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Pipeline;
 
 public class Hash extends RedisStorage<Map<String, String>> implements
 		HashStorage<String, String, String> {
@@ -146,6 +147,12 @@ public class Hash extends RedisStorage<Map<String, String>> implements
 		} finally {
 			releaseJedis(jedis, exceptionOccured);
 		}
+	}
+
+	@Override
+	protected void addToStorage(Pipeline pipline, String key, Map<String, String> t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
