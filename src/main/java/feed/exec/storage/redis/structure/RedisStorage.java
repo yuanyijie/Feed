@@ -59,7 +59,7 @@ public abstract class RedisStorage<T> implements Storage<String, T> {
 			for(String key:keys){
 				addToStorage(pipline, key, t);
 			}
-			pipline.sync();
+			System.out.println(pipline.syncAndReturnAll());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			exceptionOccured = true;
