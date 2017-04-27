@@ -10,9 +10,9 @@ public class TypeEnum {
 	public enum FollowEnum{
 		
 		/** 
-		 * 动词关系  拥有一个粉丝 拥有一个关注
+		 * 0 关注 1互相关注
 		 */
-		FANS(0),FOLLOW(1);
+		FOLLOW(0),EACHOTHER(1);
 		
 		private int code;
 		
@@ -23,6 +23,29 @@ public class TypeEnum {
 		public int code(){
 			return code;
 		}
+	}
+	
+	/**
+	 * 粉丝枚举类
+	 * @author Boxbox
+	 *
+	 */
+	public enum FanEnum{
+		/**
+		 * 0粉丝 1互相关注
+		 */
+		FAN(0),EACHOTHER(1);
+		
+		private int code;
+		
+		private FanEnum(int code){
+			this.code = code;
+		}
+		
+		public int code(){
+			return code;
+		}
+		
 	}
 	
 	public enum FeedEnum{
