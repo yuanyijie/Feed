@@ -106,5 +106,14 @@
 		t_user_info
 		where user_email = #{userEmail}
 	</select>
+	
+	<!-- 根据userId来统计数目 -->
+	<select id="countById" resultType="int">
+		select
+		count(1)
+		from
+		t_user_info
+		where user_id = #{userId}
+	</select>
 
 </mapper>

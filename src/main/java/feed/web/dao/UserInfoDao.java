@@ -80,4 +80,11 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	int emailCount(@Param(value="userEmail") String userEmail);
+	
+	/**
+	 * 根据userId查询数目
+	 * @param userId
+	 * @return
+	 */
+	int countById(@Param(value="userId") int userId);
 }

@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import feed.web.common.TypeEnum.FeedEnum;
 import feed.web.common.util.FeedAssert;
 import feed.web.dao.MsgInfoDao;
+import feed.web.dao.UserFanDao;
 import feed.web.dao.UserInfoDao;
-import feed.web.dao.UserRelationDao;
 import feed.web.model.data.MsgInfoData;
 import feed.web.model.po.MsgInfoPo;
 import feed.web.service.MsgInfoService;
@@ -26,7 +26,7 @@ public class MsgInfoServiceImpl extends BaseService implements MsgInfoService {
 	private UserInfoDao userInfoDao;
 
 	@Autowired
-	private UserRelationDao relationDao;
+	private UserFanDao userFanDao;
 
 	@Autowired
 	private PushFeedTask task;
@@ -52,7 +52,7 @@ public class MsgInfoServiceImpl extends BaseService implements MsgInfoService {
 		msgInfoDao.add(msgInfo);
 
 		// 获取粉丝列表
-		List<Integer> fansList = relationDao.getFansList(userId);
+		List<Integer> fansList = userFanDao.getFansList(userId);
 		// fasout
 		if (fansList != null && !fansList.isEmpty())
 			task.call(fansList, userId, msgCount, timeStamp);
