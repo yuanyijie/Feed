@@ -1,7 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="feed.web.dao.UserFollowDao">
-	<insert id="add" parameterType="feed.web.model.p">
-		
+
+	<sql id="user_follow_where">
+		where user_id = #{userId}
+		and follow_id = #{followId}
+	</sql>
+
+	<!-- 添加一条关注信息 -->
+	<insert id="add" parameterType="feed.web.model.po.UserFollowPo">
+		insert into
+		t_user_follow(user_id,follow_id,type)
+		values(#{userId},#{followId},#{type})
 	</insert>
+
+	<!-- 根据userId,followId获取数目 -->
+	<select id="getCount" parameterType="feed.web.model.po.UserFollowPo"
+		resultType="int">
+		select count(1)
+		from t_user_follow
+		<include refid="user_follow_where"></include>
+	</select>
+
+	<!-- 根据userId,followId删除一条信息 -->
+	<delete id="delete" parameterType="feed.web.model.po.UserFollowPo">
+		delete from t_user_follow
+		<include refid="user_follow_where"></include>
+	</delete>
+
+	<!-- 根据userId,followId更新关注的类型 -->
+	<update id="updateType" parameterType="feed.web.model.po.UserFollowPo">
+		update t_user_follow
+		set
+		type = #{type}
+		<include refid="user_follow_where"></include>
+	</update>
+
+	<!-- 根据userId,followId获取关注的类型 -->
+	<select id="getType" parameterType="feed.web.model.po.UserFollowPo">
+		select type from
+		t_user_follow
+		<include refid="user_follow_where"></include>
+	</select>
+
+	<!-- 根据userId,获取关注列表 -->
+	<select id="getFollowList" parameterType="int" resultType="int">
+		select follow_id
+		from t_user_follow
+		where user_id = #{userId}
+	</select>
+
 </mapper>

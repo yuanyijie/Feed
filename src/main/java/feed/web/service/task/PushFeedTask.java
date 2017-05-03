@@ -25,28 +25,39 @@ public class PushFeedTask {
 
 	@Autowired
 	private UserMsgIndexDao userMsgIndexDao;
-	
+
 	private FeedManager feedManager = FeedManager.getInstance();
+
+	private boolean infoEnable = log.isInfoEnabled();
 
 	@Async
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	// 大批量插入的时候不使用事务
 	public void call(List<Integer> fansList, int userId, int msgId,
 			int timeStamp) {
+		long start = 0, end;
 		UserMsgIndexPo msgIndex = new UserMsgIndexPo();
+		// 将自身添加到粉丝队列的头部
 		fansList.add(0, userId);
-		long start = System.currentTimeMillis();
+		if (infoEnable)
+			start = System.currentTimeMillis();
 		msgIndex.setAuthId(userId);
 		msgIndex.setTimeStamp(timeStamp);
 		msgIndex.setMsgId(msgId);
+		
 		try {
 			userMsgIndexDao.addAll(msgIndex, fansList);
+			// 推到Redis中粉丝的feed优先级队列
 			feedManager.addActivities(fansList, userId, msgId);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		long end = System.currentTimeMillis();
-		System.out.println((end - start) + "ms");
+		
+		if (infoEnable) {
+			end = System.currentTimeMillis();
+			// 落任务日志
+			log.info("userId:"+userId+" msgId:"+msgId+" fansCount:"+fansList.size()+"-"+(end-start)+"ms");
+		}
 	}
 
 }
