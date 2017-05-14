@@ -34,4 +34,8 @@ public class MD5Util {
 		return str;
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(generate("123"));
+	}
+	
 }

@@ -46,4 +46,7 @@ public class UserInfoController extends BaseController {
 		String token = userService.login(userEmail, userPwd);
 		return new ResponseEntity<String>(token, SUCCESS);
 	}
+	
+	
+	
 }
