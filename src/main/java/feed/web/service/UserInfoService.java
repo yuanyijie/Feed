@@ -2,6 +2,7 @@ package feed.web.service;
 
 import org.springframework.stereotype.Service;
 
+import feed.web.model.data.UserInfoData;
 import feed.web.model.vo.UserInfoVo;
 
 /**
@@ -39,4 +40,11 @@ public interface UserInfoService {
 	 * @return 登录成功返回一个JWT字符串，否则返回一个null
 	 */
 	String login(String email, String password);
+	
+	/**
+	 * 获取用户的名片信息
+	 * 包括用户名，粉丝数，关注数，微博数
+	 * @return
+	 */
+	UserInfoData getCard();
 }

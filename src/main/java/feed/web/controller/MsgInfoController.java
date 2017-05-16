@@ -30,9 +30,10 @@ public class MsgInfoController extends BaseController {
 
 	// 分页获取home的信息
 	@RequestMapping(value = "/home/{index}/{chunk}", method = RequestMethod.GET)
-	public ResponseEntity<List<MsgInfoData>> getHome(
-			@PathVariable("index") int index, @PathVariable("chunk") int chunk) {
-		return null;
+	public ResponseEntity<List<MsgInfoData>> getHome(@PathVariable("index") int index,
+			@PathVariable("chunk") int chunk) {
+		List<MsgInfoData> result = msgInfoService.getHome(index, chunk);
+		return new ResponseEntity<>(result, ResponseEnum.SUCCESS);
 	}
 
 }

@@ -1,61 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My Feed Home</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/constant.js"></script>
-	<script src="js/timeago.js"></script>
-	<script src="js/timeago.zh-cn.js"></script>
+<title>My Feed Home</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link href="css/bootstrapdialog.css" rel='stylesheet' type="text/css" />
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrapdialog.js"></script>
+<script src="js/constant.js"></script>
+<script src="js/timeago.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-default">
-	    <!-- 导航条标题-->
-	  　<div class="navbar-header">
+		<!-- 导航条标题-->
+		<div class="navbar-header">
 
-	  　    <a href="##" class="navbar-brand">Feed</a>
-	  　</div>
-	 	 <!-- 基础导航条-->
-	 	<ul class="nav navbar-nav">
-	    	<li><a href="##"><i class="icon-home icon-2x"></i>主页</a></li>
-		  	<li><a href="##"><i class="icon-leaf icon-2x"></i>发现</a></li>
-		 	<li><a href="##"><i class="icon-envelope icon-2x"></i>消息</a></li>
-		    <li><a href="##"><i class="icon-user icon-2x"></i>个人中心</a></li>
-	  	</ul>
-		  <!-- 搜索表单-->
-		  <form action="##" class="navbar-form navbar-left">
-		   	<div class="input-group input-group-lg">
-		    	<input type="text" class="form-control" placeholder="大家正在搜:硅谷第四季"></input>
-		        <span class="input-group-btn">
-		        	<button class="btn btn-default" type="button"><i class="icon-search icon-1x"></i></button>
-		        </span>
-	      	</div>
-		  </form>
+			<a href="##" class="navbar-brand">Feed</a>
+		</div>
+		<!-- 基础导航条-->
+		<ul class="nav navbar-nav">
+			<li><a href="##"><i class="icon-home icon-2x"></i>主页</a></li>
+			<li><a href="##"><i class="icon-leaf icon-2x"></i>发现</a></li>
+			<li><a href="##"><i class="icon-envelope icon-2x"></i>消息</a></li>
+			<li><a href="##"><i class="icon-user icon-2x"></i>个人中心</a></li>
+		</ul>
+		<!-- 搜索表单-->
+		<form action="##" class="navbar-form navbar-left">
+			<div class="input-group input-group-lg">
+				<input type="text" class="form-control" placeholder="大家正在搜:硅谷第四季"></input>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button">
+						<i class="icon-search icon-1x"></i>
+					</button>
+				</span>
+			</div>
+		</form>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3 text-center">
-				<img src="images/cat.jpg" class='center-block img-responsive img-circle'>
-				<div class="row text-center">
-					巨魔三叶草
-				</div>
+				<img src="images/cat.jpg"
+					class='center-block img-responsive img-circle'>
+				<div class="row text-center" id="userName">用户名</div>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<div class="row">
 							<div class="col-md-4" style="border-right: 1px solid">
-								<span id="followCount">10246</span>
-								<span>FL</span>
+								<span id="followCount">0</span> <span>FL</span>
 							</div>
 							<div class="col-md-4" style="border-right: 1px solid">
-								<span id="fansCount">99</span>
-								<span>FA</span>
+								<span id="fansCount">0</span> <span>FA</span>
 							</div>
 							<div class="col-md-4">
-								<span id="feedCount">99</span>
-								<span>CT</span>
+								<span id="msgCount">0</span> <span>CT</span>
 							</div>
 						</div>
 					</div>
@@ -69,224 +68,40 @@
 					<button class="btn btn-default pull-right">发布</button>
 				</div>
 				<div class="row" id="feedArea">
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
+					<div class="media" style="display: none" id="feedTemplate">
+						<div class="media-left">
+							<a href="#"> <img class="media-object" src="images/avtar.png" />
+							</a>
+						</div>
+						<div class="media-body text-left">
+							<h4 class="media-heading"></h4>
+							<div class="feedContent"></div>
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<i class="feedt" data-timeago=""></i>
+								</div>
+								<div class="col-md-3">
+									<i class="icon-reply icon-1x">0</i>
+								</div>
+								<div class="col-md-3">
+									<i class="icon-comment-alt icon-1x">0</i>
+								</div>
+								<div class="col-md-3">
+									<i class="icon-thumbs-up icon-1x">0</i>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
-					<div class="media">
-					  <div class="media-left">
-					    <a href="#">
-					      <img class="media-object" src="images/avtar.png" />
-					    </a>
-					  </div>
-					  <div class="media-body text-left">
-					    <h4 class="media-heading">巨魔三叶草</h4>
-					    <div>
-					    123123123123123123123123123123123
-					    </div>
-					  </div>
-					  <div class="col-md-9 col-md-offset-1 text-center">
-					  		<div class="col-md-3"s><time class="timeago" datetime="2017-05-13T17:10:50Z+08:00"></time></div>
-					  		<div class="col-md-3"><i class="icon-reply icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-comment-alt icon-1x"></i></div>
-						  	<div class="col-md-3"><i class="icon-thumbs-up icon-1x"></i></div>
-					  </div>
-					</div>
+
 				</div>
 			</div>
 			<div class="col-md-3 text-center">
 				<ul class="list-group">
-				  <li class="list-group-item">羽泉组合</li>
-				  <li class="list-group-item">欢乐颂</li>
-				  <li class="list-group-item">L姓小鲜肉</li>
-				  <li class="list-group-item">喵播火热</li>
-				  <li class="list-group-item">硅谷第四季</li>
+					<li class="list-group-item">羽泉组合</li>
+					<li class="list-group-item">欢乐颂</li>
+					<li class="list-group-item">L姓小鲜肉</li>
+					<li class="list-group-item">喵播火热</li>
+					<li class="list-group-item">硅谷第四季</li>
 				</ul>
 			</div>
 		</div>

@@ -28,4 +28,5 @@
 			(#{item},#{msgtemp.authId},#{msgtemp.msgId},#{msgtemp.timeStamp})
 		</foreach>
 	</insert>
+	
 </mapper>

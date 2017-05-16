@@ -12,6 +12,7 @@ import feed.web.common.util.FeedAssert;
 import feed.web.common.util.MD5Util;
 import feed.web.dao.UserInfoDao;
 import feed.web.model.UserInfoSession;
+import feed.web.model.data.UserInfoData;
 import feed.web.model.po.UserInfoPo;
 import feed.web.model.vo.UserInfoVo;
 import feed.web.service.UserInfoService;
@@ -62,6 +63,13 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
 		loginToken = Jwts.builder().setSubject(JSON.toJSONString(session))
 				.signWith(SignatureAlgorithm.HS256, getKey()).compact();
 		return loginToken;
+	}
+
+	@Override
+	public UserInfoData getCard() {
+		int userId = getUserId();
+		UserInfoData result = userInfoDao.getUserDataById(userId);
+		return result;
 	}
 
 }

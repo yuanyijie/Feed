@@ -3,6 +3,7 @@ package feed.web.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import feed.web.model.data.UserInfoData;
 import feed.web.model.po.UserInfoPo;
 
 @Repository
@@ -87,4 +88,11 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	int countById(@Param(value="userId") int userId);
+	
+	/**
+	 * 根据userId查询用户Data
+	 * @param userId
+	 * @return
+	 */
+	UserInfoData getUserDataById(@Param(value="userId") int userId);
 }

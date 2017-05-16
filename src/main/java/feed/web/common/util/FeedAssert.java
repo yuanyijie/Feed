@@ -92,7 +92,7 @@ public class FeedAssert {
 	 * 断言某个分页对象是正确的 否则会抛出Service Runtime异常
 	 */
 	public static void pageIsCorrect(int index, int chunk) {
-		if (index < 0 || chunk <= 0) {
+		if (index <= 0 || chunk <= 0) {
 			throw new FeedServiceException(ResponseEnum.LOGICFAILED.getCode(),
 					"pagination error");
 		}

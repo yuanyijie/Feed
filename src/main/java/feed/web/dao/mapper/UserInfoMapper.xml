@@ -9,7 +9,14 @@
 		<result property="fansCount" column="fans_count" javaType="int"></result>
 		<result property="followCount" column="follow_count" javaType="int"></result>
 	</resultMap>
-	
+
+	<resultMap id="userInfoDataMap" type="feed.web.model.data.UserInfoData">
+		<result property="userName" column="user_name" javaType="string"></result>
+		<result property="msgCount" column="msg_count" javaType="int"></result>
+		<result property="fansCount" column="fans_count" javaType="int"></result>
+		<result property="followCount" column="follow_count" javaType="int"></result>
+	</resultMap>
+
 
 	<!-- 添加用户信息 -->
 	<insert id="add">
@@ -33,7 +40,7 @@
 		user_name = #{userInfo.userName}
 		where user_id = #{_userId}
 	</update>
-	
+
 	<!-- 粉丝数累加1 -->
 	<update id="fansIncrement" parameterType="int">
 		update
@@ -42,7 +49,7 @@
 		fans_count = fans_count + 1
 		where user_id = #{userId}
 	</update>
-	
+
 	<!-- 粉丝数递减1 -->
 	<update id="fansDecrement" parameterType="int">
 		update
@@ -51,7 +58,7 @@
 		fans_count = fans_count - 1
 		where user_id = #{userId}
 	</update>
-	
+
 	<!-- 关注数累加1 -->
 	<update id="followIncrement" parameterType="int">
 		update
@@ -60,7 +67,7 @@
 		follow_count = follow_count + 1
 		where user_id = #{userId}
 	</update>
-	
+
 	<!-- 关注数递减1 -->
 	<update id="followDecrement" parameterType="int">
 		update
@@ -69,25 +76,26 @@
 		follow_count = follow_count - 1
 		where user_id = #{userId}
 	</update>
-	
-	<!-- 更新用户消息数-->
+
+	<!-- 更新用户消息数 -->
 	<update id="msgCountIncrement">
 		update
 		t_user_info
 		set
 		msg_count = msg_count + 1
-		where user_id = #{userId}
+		where
+		user_id = #{userId}
 	</update>
-	
-	<!-- 获取当前用户消息数-->
+
+	<!-- 获取当前用户消息数 -->
 	<select id="getMsgCount" parameterType="int" resultType="int">
 		select
 		msg_count
 		from
 		t_user_info
-		where user_id = #{userId}	
+		where user_id = #{userId}
 	</select>
-	
+
 	<!-- 检验当前的用户名密码 -->
 	<select id="checkAccount" resultType="int">
 		select
@@ -97,7 +105,7 @@
 		where user_email = #{userEmail}
 		and user_pwd = #{userPwd}
 	</select>
-	
+
 	<!-- 统计当前用户表中指定email的个数 -->
 	<select id="emailCount" resultType="int">
 		select
@@ -106,13 +114,20 @@
 		t_user_info
 		where user_email = #{userEmail}
 	</select>
-	
+
 	<!-- 根据userId来统计数目 -->
 	<select id="countById" resultType="int">
 		select
 		count(1)
 		from
 		t_user_info
+		where user_id = #{userId}
+	</select>
+
+	<select id="getUserDataById" parameterType="int" resultMap="userInfoDataMap">
+		select
+		user_name,fans_count,follow_count,msg_count
+		from t_user_info
 		where user_id = #{userId}
 	</select>
 

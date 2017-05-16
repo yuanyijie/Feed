@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import feed.web.common.ResponseEntity;
+import feed.web.model.data.UserInfoData;
 import feed.web.model.vo.UserInfoVo;
 import feed.web.service.UserInfoService;
 
@@ -45,6 +46,12 @@ public class UserInfoController extends BaseController {
 			@PathVariable(value = "userPwd") String userPwd) {
 		String token = userService.login(userEmail, userPwd);
 		return new ResponseEntity<String>(token, SUCCESS);
+	}
+	
+	@RequestMapping(value = "/card", method = RequestMethod.GET)
+	public ResponseEntity<UserInfoData> getCard(){
+		UserInfoData result = userService.getCard();
+		return new ResponseEntity<UserInfoData>(result, SUCCESS);
 	}
 	
 	

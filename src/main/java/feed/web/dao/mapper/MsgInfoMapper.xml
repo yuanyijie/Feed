@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="feed.web.dao.MsgInfoDao">
+	<resultMap type="feed.web.model.data.MsgInfoData" id="msgInfoDataMap">
+		<result property="userName" column="user_name" javaType="string"></result>
+		<result property="userId" column="user_id" javaType="int"></result>
+		<result property="msgId" column="msg_id" javaType="int"></result>
+		<result property="type" column="type" javaType="int"></result>
+		<result property="content" column="content" javaType="string"></result>
+		<result property="commentCount" column="comment_count" javaType="int"></result>
+		<result property="transferCount" column="transfer_count" javaType="int"></result>
+		<result property="timeStamp" column="time_t" javaType="int"></result>
+	</resultMap>
 
 	<insert id="add" parameterType="feed.web.model.po.MsgInfoPo">
 		insert into
@@ -20,19 +30,24 @@
 		)
 	</insert>
 
-	<select id="getMsgList" resultType="feed.web.model.data.MsgInfoData">
+	<select id="getMsgList" resultMap="msgInfoDataMap">
 		SELECT
-		a.user_id,
-		a.msg_id,
-		a.content,
-		a.type,
-		a.time_t
-		FROM
-		t_msg_info a
-		JOIN t_user_msg_index b ON
-		a.user_id = b.author_id
+		info.user_id,
+		info.msg_id,
+		info.content,
+		info.type,
+		info.time_t,
+		info.comment_count,
+		info.transfer_count,
+		uinfo.user_name
+		FROM t_msg_info info
+		LEFT JOIN t_user_info uinfo ON uinfo.user_id = info.user_id
+		LEFT JOIN t_user_msg_index mindex ON mindex.author_id = info.user_id
+		AND mindex.msg_id = info.msg_id
 		WHERE
-		b.user_id = #{userId}
+			mindex.user_id = #{userId}
+		ORDER BY
+			mindex.time_t DESC
 		LIMIT ${(index-1)*chunk},#{chunk}
 	</select>
 </mapper>

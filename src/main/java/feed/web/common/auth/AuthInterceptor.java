@@ -3,6 +3,7 @@ package feed.web.common.auth;
 import static feed.web.common.ResponseEnum.VOID_AUTHFAILED_JSON;
 import feed.web.model.UserInfoSession;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 
 import java.security.Key;
@@ -51,7 +52,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 					return true;
 				}
 			} catch (SignatureException e) {
-				log.warn(e.getMessage(),e);
+				log.warn(e.getMessage());
+			} catch (MalformedJwtException e){
+				log.warn(e.getMessage());
 			}
 		}
 		// writer在容器实现层会被关闭

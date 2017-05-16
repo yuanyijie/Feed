@@ -1,7 +1,8 @@
 package feed.web.common;
 
 /**
- * 请求编码
+ * 请求响应
+ * 编码
  * 
  * @author Boxbox
  * 

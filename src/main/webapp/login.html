@@ -56,6 +56,7 @@
 							// 如果登录成功，将token存储到localStorage中
 							localStorage.setItem(FEED_SESSION, onData.data);
 							// 下一步跳转到home页面
+							window.location.href=APPID+"/home.html";
 						}
 					)	 
 				}

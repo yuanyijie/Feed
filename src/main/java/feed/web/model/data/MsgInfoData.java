@@ -10,6 +10,11 @@ public class MsgInfoData {
 	 * 用户Id
 	 */
 	private Integer userId;
+	
+	/**
+	 * 用户名
+	 */
+	private String userName;
 
 	/**
 	 * 消息Id
@@ -27,19 +32,9 @@ public class MsgInfoData {
 	private Integer type;
 
 	/**
-	 * 评论过数量 只增不减
-	 */
-	private Integer commentedCount;
-
-	/**
 	 * 当前评论数量
 	 */
 	private Integer commentCount;
-
-	/**
-	 * 转发过数量 只增不减
-	 */
-	private Integer transferredCount;
 
 	/**
 	 * 当前转发数量
@@ -83,28 +78,12 @@ public class MsgInfoData {
 		this.type = type;
 	}
 
-	public Integer getCommentedCount() {
-		return commentedCount;
-	}
-
-	public void setCommentedCount(Integer commentedCount) {
-		this.commentedCount = commentedCount;
-	}
-
 	public Integer getCommentCount() {
 		return commentCount;
 	}
 
 	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
-	}
-
-	public Integer getTransferredCount() {
-		return transferredCount;
-	}
-
-	public void setTransferredCount(Integer transferredCount) {
-		this.transferredCount = transferredCount;
 	}
 
 	public Integer getTransferCount() {
@@ -122,15 +101,20 @@ public class MsgInfoData {
 	public void setTimeStamp(Integer timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	@Override
 	public String toString() {
-		return "MsgInfoData [userId=" + userId + ", msgId=" + msgId
-				+ ", content=" + content + ", type=" + type
-				+ ", commentedCount=" + commentedCount + ", commentCount="
-				+ commentCount + ", transferredCount=" + transferredCount
-				+ ", transferCount=" + transferCount + ", timeStamp="
-				+ timeStamp + "]";
+		return "MsgInfoData [userId=" + userId + ", msgId=" + msgId + ", content=" + content + ", type=" + type
+				+ ", commentCount=" + commentCount + ", transferCount=" + transferCount + ", timeStamp=" + timeStamp
+				+ "]";
 	}
 	
 }
