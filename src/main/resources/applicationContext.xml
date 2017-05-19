@@ -78,15 +78,15 @@
 		<property name="annotationClass" value="org.springframework.stereotype.Repository"></property>
 	</bean>
 
-	<!-- spring线程池，用于异步任务 -->
-	<!-- <bean id="taskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="5" />
-		<property name="keepAliveSeconds" value="300" />
-		<property name="maxPoolSize" value="10" />
-		<property name="queueCapacity" value="50" />
-	</bean> -->
-	
+	<!-- 异步任务执行器 -->
 	<task:executor id="myexecutor" pool-size="20"/>  
     <task:annotation-driven executor="myexecutor"/>  
+    
+    <!-- 上传文件需要配置-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+    	<property name="defaultEncoding" value="UTF-8" />  
+    	<!-- 上传文件大小的上限为2M -->  
+    	<property name="maxUploadSize" value="2097152"></property>  
+   		<property name="maxInMemorySize" value="40960"></property>  
+	</bean>  
 </beans>
