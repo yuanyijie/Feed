@@ -2,8 +2,6 @@ package feed.web.controller;
 
 import static feed.web.common.ResponseEnum.SUCCESS;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import feed.web.model.data.AvatarData;
 import feed.web.model.data.UserInfoData;
 import feed.web.model.vo.UserInfoVo;
 import feed.web.service.UserInfoService;
-import net.coobird.thumbnailator.Thumbnails;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -68,14 +65,8 @@ public class UserInfoController extends BaseController {
 			@RequestParam(value = "avatar_data") String avatarData, HttpServletRequest request) {
 		// 用户上传自己的头像
 		AvatarData avaData = JSON.parseObject(avatarData, AvatarData.class);
-		try {
-			Thumbnails.of(avatarFile.getInputStream()).scale(avaData.getScaleX(), avaData.getScaleY())
-					.sourceRegion(avaData.getX(), avaData.getY(), avaData.getWidth(), avaData.getHeight()).outputFormat("jpg").toFile("D:/cat");;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		String picturePath = userService.uploadAvatar(avatarFile, avaData);
+		return new ResponseEntity<String>(picturePath, SUCCESS);
 	}
 
 }

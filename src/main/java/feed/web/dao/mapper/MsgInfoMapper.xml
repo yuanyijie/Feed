@@ -10,6 +10,7 @@
 		<result property="commentCount" column="comment_count" javaType="int"></result>
 		<result property="transferCount" column="transfer_count" javaType="int"></result>
 		<result property="timeStamp" column="time_t" javaType="int"></result>
+		<result property="userAvatar" column="user_avatar" javaType="string"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="feed.web.model.po.MsgInfoPo">
@@ -39,7 +40,8 @@
 		info.time_t,
 		info.comment_count,
 		info.transfer_count,
-		uinfo.user_name
+		uinfo.user_name,
+		uinfo.user_avatar
 		FROM t_msg_info info
 		LEFT JOIN t_user_info uinfo ON uinfo.user_id = info.user_id
 		LEFT JOIN t_user_msg_index mindex ON mindex.author_id = info.user_id

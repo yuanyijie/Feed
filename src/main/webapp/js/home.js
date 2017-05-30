@@ -24,6 +24,9 @@ function initUserInfo() {
 		$("#followCount").html(data.followCount);
 		$("#fansCount").html(data.fansCount);
 		$("#msgCount").html(data.msgCount);
+		var userAvatar = data.userAvatar;
+		if (userAvatar)
+			$("#avatar_img").attr("src", userAvatar);
 	}, "get");
 }
 
@@ -53,7 +56,7 @@ function appendFeeds(feedList) {
 	var curData;
 	var curFeed;
 	// 当前的时间戳
-	var curTimeStamp = new Date().getTime()/1000;
+	var curTimeStamp = new Date().getTime() / 1000;
 	for (var i = 0; i < feedList.length; i++) {
 		curData = feedList[i];
 		curFeed = feedTemp.clone();
@@ -65,23 +68,24 @@ function appendFeeds(feedList) {
 
 	// 处理clone后的Feed
 	function dealWithCloneFeed(feed, data) {
-		feed.css("display", "inline");
+		feed.css("display", "block");
 		// feedId暂时 = userId_msgId
 		feed.attr("id", data.userId + "_" + data.msgId);
 		feed.find("h4").html(data.userName);
 		feed.find("div.feedContent").html(data.content);
 		feed.find("i.icon-reply").html(data.transferCount);
 		feed.find("i.icon-comment-alt").html(data.commentCount);
+		feed.find("img.media-object").attr("src", data.userAvatar);
 		// 显示时间戳
 		var dtimeStamp = data.timeStamp;
 		var curTelement = feed.find("i.feedt");
 		// 当时间戳跟当前相差一个小时
-		if(curTimeStamp - dtimeStamp < EXPIRE_TIME){
-			curTelement.attr("data-timeago", dtimeStamp*1000);
+		if (curTimeStamp - dtimeStamp < EXPIRE_TIME) {
+			curTelement.attr("data-timeago", dtimeStamp * 1000);
 			curTelement.addClass(".timestamp");
-		}
-		else
-			curTelement.html(new Date(dtimeStamp*1000).format(curTimeStamp*1000));
-			
+		} else
+			curTelement.html(new Date(dtimeStamp * 1000)
+					.format(curTimeStamp * 1000));
+
 	}
 }

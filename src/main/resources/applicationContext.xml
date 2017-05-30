@@ -79,14 +79,15 @@
 	</bean>
 
 	<!-- 异步任务执行器 -->
-	<task:executor id="myexecutor" pool-size="20"/>  
-    <task:annotation-driven executor="myexecutor"/>  
-    
-    <!-- 上传文件需要配置-->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-    	<property name="defaultEncoding" value="UTF-8" />  
-    	<!-- 上传文件大小的上限为2M -->  
-    	<property name="maxUploadSize" value="2097152"></property>  
-   		<property name="maxInMemorySize" value="40960"></property>  
-	</bean>  
+	<task:executor id="myexecutor" pool-size="20" />
+	<task:annotation-driven executor="myexecutor" />
+
+	<!-- 上传文件需要配置 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 上传文件大小的上限为2M -->
+		<property name="maxUploadSize" value="2097152"></property>
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
 </beans>

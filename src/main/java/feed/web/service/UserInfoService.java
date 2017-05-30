@@ -1,7 +1,9 @@
 package feed.web.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import feed.web.model.data.AvatarData;
 import feed.web.model.data.UserInfoData;
 import feed.web.model.vo.UserInfoVo;
 
@@ -47,4 +49,12 @@ public interface UserInfoService {
 	 * @return
 	 */
 	UserInfoData getCard();
+	
+	/**
+	 * 上传并替换自己的头像
+	 * @param avatarFile
+	 * @param avatarData
+	 * @return 返回新头像的url
+	 */
+	String uploadAvatar(MultipartFile avatarFile, AvatarData avatarData);
 }

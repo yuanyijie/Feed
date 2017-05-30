@@ -15,6 +15,11 @@ public class MsgInfoData {
 	 * 用户名
 	 */
 	private String userName;
+	
+	/**
+	 * 用户头像url
+	 */
+	private String userAvatar;
 
 	/**
 	 * 消息Id
@@ -109,12 +114,20 @@ public class MsgInfoData {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String getUserAvatar() {
+		return userAvatar;
+	}
+
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
+	}
 
 	@Override
 	public String toString() {
-		return "MsgInfoData [userId=" + userId + ", msgId=" + msgId + ", content=" + content + ", type=" + type
-				+ ", commentCount=" + commentCount + ", transferCount=" + transferCount + ", timeStamp=" + timeStamp
-				+ "]";
+		return "MsgInfoData [userId=" + userId + ", userName=" + userName + ", userAvatar=" + userAvatar + ", msgId="
+				+ msgId + ", content=" + content + ", type=" + type + ", commentCount=" + commentCount
+				+ ", transferCount=" + transferCount + ", timeStamp=" + timeStamp + "]";
 	}
 	
 }

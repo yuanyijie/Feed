@@ -15,6 +15,7 @@
 		<result property="msgCount" column="msg_count" javaType="int"></result>
 		<result property="fansCount" column="fans_count" javaType="int"></result>
 		<result property="followCount" column="follow_count" javaType="int"></result>
+		<result property="userAvatar" column="user_avatar" javaType="string"></result>
 	</resultMap>
 
 
@@ -126,9 +127,16 @@
 
 	<select id="getUserDataById" parameterType="int" resultMap="userInfoDataMap">
 		select
-		user_name,fans_count,follow_count,msg_count
-		from t_user_info
+		user_name,fans_count,follow_count,msg_count,user_avatar
+		from
+		t_user_info
 		where user_id = #{userId}
 	</select>
+
+	<update id="updateUserAvatar">
+		update t_user_info
+		set user_avatar = #{userAvatar}
+		where user_id = #{userId}
+	</update>
 
 </mapper>

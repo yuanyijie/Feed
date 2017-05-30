@@ -95,4 +95,6 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	UserInfoData getUserDataById(@Param(value="userId") int userId);
+	
+	void updateUserAvatar(@Param(value="userId") int userId, @Param(value="userAvatar") String userAvatar);
 }

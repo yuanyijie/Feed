@@ -25,6 +25,11 @@ public class UserInfoData {
 	 * 关注数
 	 */
 	private Integer followCount;
+	
+	/**
+	 * 用户头像Url
+	 */
+	private String userAvatar;
 
 	public String getUserName() {
 		return userName;
@@ -57,5 +62,20 @@ public class UserInfoData {
 	public void setFollowCount(Integer followCount) {
 		this.followCount = followCount;
 	}
+
+	public String getUserAvatar() {
+		return userAvatar;
+	}
+
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
+	}
+
+	@Override
+	public String toString() {
+		return "UserInfoData [userName=" + userName + ", msgCount=" + msgCount + ", fansCount=" + fansCount
+				+ ", followCount=" + followCount + ", userAvatar=" + userAvatar + "]";
+	}
+	
 	
 }
